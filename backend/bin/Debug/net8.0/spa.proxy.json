@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "",
+"RedirectUrl": "",
+"LaunchCommand": "",
+"WorkingDirectory": "C:\\Users\\kryto\\OneDrive\\Desktop\\CvAnalysis-main\\backend",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: cv-analysis-backend
+    env: dotnet
+    plan: free
+    buildCommand: dotnet restore && dotnet publish -c Release -o out
+    startCommand: dotnet out/CvAnalysis.Server.dll
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:10000
+      - key: AZURE_OPENAI_ENDPOINT
+        sync: false
+      - key: AZURE_OPENAI_API_KEY
+        sync: false
+      - key: AZURE_FORM_RECOGNIZER_ENDPOINT
+        sync: false
+      - key: AZURE_FORM_RECOGNIZER_API_KEY
+        sync: false 
