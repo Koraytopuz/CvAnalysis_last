@@ -99,7 +99,7 @@ export const CvAnalyzerPage: React.FC = () => {
         try {
             // Development için localhost, production için Render URL
             const API_BASE_URL = import.meta.env.PROD 
-                ? 'https://cv-analysis-backend.onrender.com'
+                ? 'https://cvanalysis-last.onrender.com'
                 : 'http://localhost:5191';
             
             const response = await axios.post<AnalysisReport>(
@@ -150,7 +150,7 @@ export const CvAnalyzerPage: React.FC = () => {
     const testConnection = async () => {
         try {
             const API_BASE_URL = import.meta.env.PROD 
-                ? 'https://cv-analysis-backend.onrender.com'
+                ? 'https://cvanalysis-last.onrender.com'
                 : 'http://localhost:5191';
             const response = await axios.get(`${API_BASE_URL}/api/CvAnalysis/test`);
             console.log('Test response:', response.data);

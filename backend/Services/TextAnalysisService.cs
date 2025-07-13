@@ -71,16 +71,7 @@ namespace CvAnalysis.Server.Services
                     return report;
                 }
 
-                // Environment variable veya appsettings'ten endpoint al
-                var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ?? _configuration["AzureAi:OpenAiEndpoint"];
-                if (string.IsNullOrWhiteSpace(endpoint))
-                    throw new InvalidOperationException("Azure OpenAI endpoint environment variable veya appsettings'te tanımlı değil!");
-
-                // Entra ID authentication (DefaultAzureCredential)
-                var credential = new DefaultAzureCredential();
-                var azureClient = new AzureOpenAIClient(new Uri(endpoint), credential);
-                var deploymentName = _configuration["AzureAi:OpenAiDeployment"] ?? "model-router";
-                var chatClient = azureClient.GetChatClient(deploymentName);
+                // Sadece constructor'da oluşturulan _chatClient kullanılacak
 
                 string prompt = lang == "en"
                     ? @"Below is a resume (CV) text and a job description.
@@ -114,7 +105,7 @@ Puan: <sayı>
                     PresencePenalty = 0.0f
                 };
 
-                var completion = await chatClient.CompleteChatAsync(messages, options);
+                var completion = await _chatClient.CompleteChatAsync(messages, options);
                 var result = completion.Value.Content[0].Text;
 
                 _logger.LogInformation($"OpenAI API'den yanıt alındı. Yanıt uzunluğu: {result.Length}");
@@ -178,7 +169,7 @@ Sadece anahtar kelimeleri virgül ile ayırarak sırala. Açıklama veya başka 
                         MaxOutputTokenCount = 128,
                         TopP = 0.95f
                     };
-                    var jobKeywordCompletion = await chatClient.CompleteChatAsync(jobKeywordMessages, keywordOptions);
+                    var jobKeywordCompletion = await _chatClient.CompleteChatAsync(jobKeywordMessages, keywordOptions);
                     var jobKeywordResult = jobKeywordCompletion.Value.Content[0].Text;
                     var jobKeywords = jobKeywordResult.Split(',')
                         .Select(k => k.Trim().ToLowerInvariant())
@@ -195,7 +186,7 @@ CV metni:
 {cvText}
 ";
                     var cvKeywordMessages = new List<ChatMessage> { new UserChatMessage(cvKeywordPrompt) };
-                    var cvKeywordCompletion = await chatClient.CompleteChatAsync(cvKeywordMessages, keywordOptions);
+                    var cvKeywordCompletion = await _chatClient.CompleteChatAsync(cvKeywordMessages, keywordOptions);
                     var cvKeywordResult = cvKeywordCompletion.Value.Content[0].Text;
                     var cvKeywords = cvKeywordResult.Split(',')
                         .Select(k => k.Trim().ToLowerInvariant())
