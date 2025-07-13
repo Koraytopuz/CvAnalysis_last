@@ -10,11 +10,21 @@ services:
         value: Production
       - key: ASPNETCORE_URLS
         value: http://+:10000
-      - key: AZURE_OPENAI_ENDPOINT
-        sync: false
-      - key: AZURE_OPENAI_API_KEY
-        sync: false
-      - key: AZURE_FORM_RECOGNIZER_ENDPOINT
-        sync: false
-      - key: AZURE_FORM_RECOGNIZER_API_KEY
-        sync: false 
+      
+      # Veritabanı bağlantısı
+      - key: ConnectionStrings__DefaultConnection
+        fromSecret: false # Değeri Render arayüzünden alacak
+
+      # Azure Document Intelligence (eski adıyla Form Recognizer)
+      - key: AzureAi__DocumentIntelligenceEndpoint
+        fromSecret: false # Değeri Render arayüzünden alacak
+      - key: AzureAi__DocumentIntelligenceKey
+        fromSecret: true # Değeri Render arayüzünden alacak (gizli)
+
+      # Azure OpenAI
+      - key: AzureAi__OpenAiEndpoint
+        fromSecret: false # Değeri Render arayüzünden alacak
+      - key: AzureAi__OpenAikey # 'k' harfinin küçük olduğuna dikkat!
+        fromSecret: true # Değeri Render arayüzünden alacak (gizli)
+      - key: AzureAi__OpenAiDeployment
+        fromSecret: false # Değeri Render arayüzünden alacak
