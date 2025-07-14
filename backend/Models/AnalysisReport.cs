@@ -10,5 +10,6 @@ namespace CvAnalysis.Server.Models
         public string ExtractedCvText { get; set; } = string.Empty;
         public List<string> AtsImprovementTips { get; set; } = new();
         public List<string> ExtraAdvice { get; set; } = new();
+        public string AtsScoreDetails { get; set; } = string.Empty;
     }
 }

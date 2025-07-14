@@ -19,11 +19,11 @@
           }
         }
       },
-      "Azure.AI.OpenAI/2.0.0": {
+      "Azure.AI.OpenAI/1.0.0-beta.7": {
         "type": "package",
         "dependencies": {
-          "Azure.Core": "1.43.0",
-          "OpenAI": "2.0.0"
+          "Azure.Core": "1.34.0",
+          "System.Text.Json": "4.7.2"
         },
         "compile": {
           "lib/netstandard2.0/Azure.AI.OpenAI.dll": {
@@ -1355,16 +1355,16 @@
         "lib/netstandard2.0/Azure.AI.FormRecognizer.xml"
       ]
     },
-    "Azure.AI.OpenAI/2.0.0": {
-      "sha512": "U3VuEMqf3WZpGiv/EWNNHui/VWpNWI1FQ0cBUybdLuhrZooy84W4+WD777ZAI9W0tlDqmWysLtLLdzgmpqbNiA==",
+    "Azure.AI.OpenAI/1.0.0-beta.7": {
+      "sha512": "7mGN+ECxVrKDKb/U2wq4XmJXayBb56kBjriSPYE64SqiwsEKOyf4kWd3g/BNjFb+1/RiUlwBvlsutmiXaaZUZQ==",
       "type": "package",
-      "path": "azure.ai.openai/2.0.0",
+      "path": "azure.ai.openai/1.0.0-beta.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "CHANGELOG.md",
         "README.md",
-        "azure.ai.openai.2.0.0.nupkg.sha512",
+        "azure.ai.openai.1.0.0-beta.7.nupkg.sha512",
         "azure.ai.openai.nuspec",
         "azureicon.png",
         "lib/netstandard2.0/Azure.AI.OpenAI.dll",
@@ -3309,7 +3309,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Azure.AI.FormRecognizer >= 4.1.0",
-      "Azure.AI.OpenAI >= 2.0.0",
+      "Azure.AI.OpenAI >= 1.0.0-beta.7",
       "Azure.Identity >= 1.14.1",
       "Microsoft.AspNetCore.SpaProxy >= 8.0.7",
       "Microsoft.EntityFrameworkCore.Sqlite >= 8.0.7",
@@ -3361,8 +3361,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -3374,7 +3373,7 @@
           },
           "Azure.AI.OpenAI": {
             "target": "Package",
-            "version": "[2.0.0, )"
+            "version": "[1.0.0-beta.7, )"
           },
           "Azure.Identity": {
             "target": "Package",
@@ -3422,7 +3421,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.412/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

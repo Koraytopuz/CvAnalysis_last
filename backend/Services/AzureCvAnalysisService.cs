@@ -69,8 +69,20 @@ namespace CvAnalysis.Server.Services
             }
             catch (RequestFailedException ex)
             {
-                _logger.LogError(ex, $"Azure Document Intelligence API hatası: {ex.Message}");
-                throw new InvalidOperationException($"Azure Document Intelligence API hatası: {ex.Message}", ex);
+                _logger.LogError(ex, $"Azure Document Intelligence API hatası: {ex.Message}, Status: {ex.Status}, ErrorCode: {ex.ErrorCode}");
+                
+                if (ex.Status == 404)
+                {
+                    throw new InvalidOperationException($"Azure Document Intelligence servisi bulunamadı. Endpoint: {_endpoint}. Lütfen Azure portal'da servisin aktif olduğundan emin olun.", ex);
+                }
+                else if (ex.Status == 401)
+                {
+                    throw new InvalidOperationException("Azure Document Intelligence API anahtarı geçersiz. Lütfen API anahtarını kontrol edin.", ex);
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Azure Document Intelligence API hatası: {ex.Message} (Status: {ex.Status})", ex);
+                }
             }
             catch (Exception ex)
             {

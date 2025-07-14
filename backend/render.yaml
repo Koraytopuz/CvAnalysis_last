@@ -24,7 +24,7 @@ services:
       # Azure OpenAI
       - key: AzureAi__OpenAiEndpoint
         fromSecret: false # Değeri Render arayüzünden alacak
-      - key: AzureAi__OpenAikey # 'k' harfinin küçük olduğuna dikkat!
+      - key: AzureAi__OpenAiKey # 'k' harfinin küçük olduğuna dikkat!
         fromSecret: true # Değeri Render arayüzünden alacak (gizli)
       - key: AzureAi__OpenAiDeployment
         fromSecret: false # Değeri Render arayüzünden alacak

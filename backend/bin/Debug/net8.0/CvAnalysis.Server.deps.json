@@ -9,7 +9,7 @@
       "CvAnalysis.Server/1.0.0": {
         "dependencies": {
           "Azure.AI.FormRecognizer": "4.1.0",
-          "Azure.AI.OpenAI": "2.0.0",
+          "Azure.AI.OpenAI": "1.0.0-beta.7",
           "Azure.Identity": "1.14.1",
           "Microsoft.AspNetCore.SpaProxy": "8.0.7",
           "Microsoft.EntityFrameworkCore.Sqlite": "8.0.7",
@@ -33,15 +33,15 @@
           }
         }
       },
-      "Azure.AI.OpenAI/2.0.0": {
+      "Azure.AI.OpenAI/1.0.0-beta.7": {
         "dependencies": {
           "Azure.Core": "1.46.1",
-          "OpenAI": "2.2.0"
+          "System.Text.Json": "8.0.4"
         },
         "runtime": {
           "lib/netstandard2.0/Azure.AI.OpenAI.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.24.48003"
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.23.42502"
           }
         }
       },
@@ -859,12 +859,12 @@
       "path": "azure.ai.formrecognizer/4.1.0",
       "hashPath": "azure.ai.formrecognizer.4.1.0.nupkg.sha512"
     },
-    "Azure.AI.OpenAI/2.0.0": {
+    "Azure.AI.OpenAI/1.0.0-beta.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-U3VuEMqf3WZpGiv/EWNNHui/VWpNWI1FQ0cBUybdLuhrZooy84W4+WD777ZAI9W0tlDqmWysLtLLdzgmpqbNiA==",
-      "path": "azure.ai.openai/2.0.0",
-      "hashPath": "azure.ai.openai.2.0.0.nupkg.sha512"
+      "sha512": "sha512-7mGN+ECxVrKDKb/U2wq4XmJXayBb56kBjriSPYE64SqiwsEKOyf4kWd3g/BNjFb+1/RiUlwBvlsutmiXaaZUZQ==",
+      "path": "azure.ai.openai/1.0.0-beta.7",
+      "hashPath": "azure.ai.openai.1.0.0-beta.7.nupkg.sha512"
     },
     "Azure.Core/1.46.1": {
       "type": "package",

@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "vIPW64c8Uus=",
+  "dgSpecHash": "bL70i+tx7z8=",
   "success": true,
   "projectFilePath": "C:\\Users\\kryto\\OneDrive\\Desktop\\CvAnalysis-main\\backend\\CvAnalysis.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kryto\\.nuget\\packages\\azure.ai.formrecognizer\\4.1.0\\azure.ai.formrecognizer.4.1.0.nupkg.sha512",
-    "C:\\Users\\kryto\\.nuget\\packages\\azure.ai.openai\\2.0.0\\azure.ai.openai.2.0.0.nupkg.sha512",
+    "C:\\Users\\kryto\\.nuget\\packages\\azure.ai.openai\\1.0.0-beta.7\\azure.ai.openai.1.0.0-beta.7.nupkg.sha512",
     "C:\\Users\\kryto\\.nuget\\packages\\azure.core\\1.46.1\\azure.core.1.46.1.nupkg.sha512",
     "C:\\Users\\kryto\\.nuget\\packages\\azure.identity\\1.14.1\\azure.identity.1.14.1.nupkg.sha512",
     "C:\\Users\\kryto\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

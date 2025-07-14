@@ -18,6 +18,7 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import KeyIcon from '@mui/icons-material/VpnKey';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 interface AnalysisReport {
@@ -30,6 +31,7 @@ interface AnalysisReport {
     extractedCvText: string;
     atsImprovementTips: string[];
     extraAdvice: string[];
+    atsScoreDetails?: string; // Added for new detail display
 }
 
 const CircularProgressWithLabel = (props: { value: number }) => (
@@ -60,8 +62,6 @@ export const CvAnalyzerPage: React.FC = () => {
     const [analysisReport, setAnalysisReport] = useState<AnalysisReport | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [lang, setLang] = useState<'tr' | 'en'>('tr');
-    const [showLangBox, setShowLangBox] = useState(true);
     const theme = createTheme({
       palette: {
         mode: 'light', // Always light mode
@@ -69,14 +69,12 @@ export const CvAnalyzerPage: React.FC = () => {
       },
     });
 
-    const t = (tr: string, en: string) => lang === 'tr' ? tr : en;
-
     useEffect(() => {
       const onScroll = () => {
         if (window.scrollY === 0) {
-          setShowLangBox(true);
+          // setShowLangBox(true); // Removed language selection UI
         } else {
-          setShowLangBox(false);
+          // setShowLangBox(false); // Removed language selection UI
         }
       };
       window.addEventListener('scroll', onScroll);
@@ -94,7 +92,7 @@ export const CvAnalyzerPage: React.FC = () => {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('jobDescription', jobDescription || '');
-        formData.append('lang', lang);
+        // formData.append('lang', lang); // Removed lang from formData
 
         try {
             // Development için localhost, production için Render URL
@@ -134,7 +132,7 @@ export const CvAnalyzerPage: React.FC = () => {
         } finally {
             setIsLoading(false);
         }
-    }, [jobDescription, lang]);
+    }, [jobDescription]); // Removed lang from dependency array
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -188,19 +186,17 @@ export const CvAnalyzerPage: React.FC = () => {
                         justifyContent: 'center',
                         minWidth: 0,
                         gap: 0,
-                        pointerEvents: showLangBox ? 'auto' : 'none',
-                        opacity: showLangBox ? 1 : 0,
+                        pointerEvents: 'none', // Removed language selection UI
+                        opacity: 0, // Removed language selection UI
                         transition: 'opacity 0.3s',
                         overflow: 'hidden',
                         cursor: 'pointer',
                     }}
-                    onClick={() => setLang(lang === 'tr' ? 'en' : 'tr')}
+                    // Removed language toggle onClick
                 >
                     <img
-                        src={lang === 'tr'
-                            ? 'https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg'
-                            : 'https://bayrakevi.com/image/cache/data/devlet1/ingiliz-800x800.jpg'}
-                        alt={lang === 'tr' ? 'TR' : 'GB'}
+                        src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg" // Always Turkish flag
+                        alt="TR"
                         style={{
                             width: '100%',
                             height: '100%',
@@ -224,10 +220,12 @@ export const CvAnalyzerPage: React.FC = () => {
                         textAlign: 'center',
                     }}>
                         <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', letterSpacing: 1, color: '#6366f1', mb: 2, fontSize: { xs: 32, md: 48 } }}>
-                            {t('Yapay Zeka Destekli CV Analiz Motoru', 'AI-Powered CV Analysis Engine')}
+                            {/* Removed t() for language selection */}
+                            Yapay Zeka Destekli CV Analiz Motoru
                         </Typography>
                         <Typography variant="h5" sx={{ color: '#3b3b3b', mb: 2, fontWeight: 500 }}>
-                            {t('CV\'nizi yükleyerek ATS uyumluluğunu ve içerik kalitesini saniyeler içinde ölçün.', 'Upload your CV to instantly measure ATS compatibility and content quality.')}
+                            {/* Removed t() for language selection */}
+                            CV'nizi yükleyerek ATS uyumluluğunu ve içerik kalitesini saniyeler içinde ölçün.
                         </Typography>
                     </Box>
                     {/* Ana içerik kutusu */}
@@ -276,7 +274,8 @@ export const CvAnalyzerPage: React.FC = () => {
                                   mb: 2
                                 }}
                               >
-                                {t('1. Adım: İş İlanı Metnini Yapıştırın (İsteğe Bağlı)', 'Step 1: Paste Job Description (Optional)')}
+                                {/* Removed t() for language selection */}
+                                Adım 1: İş İlanı Metnini Yapıştırın (İsteğe Bağlı)
                               </Typography>
                               <TextField
                                 className="custom-scroll"
@@ -284,8 +283,8 @@ export const CvAnalyzerPage: React.FC = () => {
                                 multiline
                                 rows={8}
                                 variant="outlined"
-                                label={t('İş İlanı Metni', 'Job Description')}
-                                placeholder={t('Karşılaştırma yapmak istediğiniz iş ilanı metnini buraya yapıştırın...', 'Paste the job description you want to compare here...')}
+                                label="İş İlanı Metni"
+                                placeholder="Karşılaştırma yapmak istediğiniz iş ilanı metnini buraya yapıştırın..."
                                 value={jobDescription}
                                 onChange={(e) => setJobDescription(e.target.value)}
                                 sx={{
@@ -330,7 +329,7 @@ export const CvAnalyzerPage: React.FC = () => {
                             }}
                           >
                             <CardContent>
-                              <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, color: '#3f51b5', fontSize: { xs: 18, md: 22 }, mb: 2 }}>{t('2. Adım: CV\'nizi Yükleyin ve Analiz Edin', 'Step 2: Upload Your CV and Analyze')}</Typography>
+                              <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, color: '#3f51b5', fontSize: { xs: 18, md: 22 }, mb: 2 }}>Adım 2: CV'nizi Yükleyin ve Analiz Edin</Typography>
                               <Box {...getRootProps()} sx={{ 
                                   border: `3px dashed ${isDragActive ? '#3f51b5' : 'lightgrey'}`, 
                                   p: 4, 
@@ -348,8 +347,8 @@ export const CvAnalyzerPage: React.FC = () => {
                               }}>
                                   <input {...getInputProps()} />
                                   <UploadFileIcon sx={{ fontSize: 40, color: 'grey.500', mb: 1 }} />
-                                  <Typography sx={{ fontWeight: 500, mb: 0.5 }}>{isDragActive ? t('Dosyayı Buraya Bırakın...', 'Drop your file here...') : t('Analiz İçin CV Dosyanızı Sürükleyin', 'Drag and drop your CV file here, or click to select')}</Typography>
-                                  <Typography color="text.secondary" variant="body2">{t('veya seçmek için tıklayın (.pdf, .docx)', 'or click to select (.pdf, .docx)')}
+                                  <Typography sx={{ fontWeight: 500, mb: 0.5 }}>{isDragActive ? 'Dosyayı Buraya Bırakın...' : 'Analiz İçin CV Dosyanızı Sürükleyin'}</Typography>
+                                  <Typography color="text.secondary" variant="body2">veya seçmek için tıklayın (.pdf, .docx)
                                   </Typography>
                               </Box>
                             </CardContent>
@@ -372,35 +371,84 @@ export const CvAnalyzerPage: React.FC = () => {
                               <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                                   <TrendingUpIcon sx={{ fontSize: 36, color: '#6366f1', mb: 1 }} />
                                   <Typography variant="h5" component="div" gutterBottom sx={{ fontWeight: '600' }}>
-                                      {t('ATS Uyumluluk Puanı', 'ATS Compatibility Score')}
+                                      ATS Uyumluluk Puanı
                                   </Typography>
                                   <CircularProgressWithLabel value={analysisReport.atsScore} />
+                                  {/* Puanlama detayları */}
+                                  {analysisReport.atsScoreDetails && (
+                                    <Box
+                                      sx={{
+                                        mt: 2,
+                                        width: '100%',
+                                        maxWidth: 420,
+                                        textAlign: 'left',
+                                        bgcolor: '#f5f7ff',
+                                        border: '1.5px solid #e0e7ff',
+                                        borderRadius: 3,
+                                        boxShadow: 2,
+                                        px: 3,
+                                        py: 2.5,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'flex-start',
+                                        gap: 1.5,
+                                      }}
+                                    >
+                                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                                        <TrendingUpIcon sx={{ fontSize: 22, color: '#6366f1', mr: 1 }} />
+                                        <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#6366f1' }}>
+                                          Puanlama Sonucu
+                                        </Typography>
+                                      </Box>
+                                      {(() => {
+                                        const details = analysisReport.atsScoreDetails.split('\n');
+                                        const fields = [
+                                          { label: 'Okunabilirlik', key: 'Format ve Okunabilirlik' },
+                                          { label: 'Anahtar Kelime Optimizasyonu', key: 'Anahtar Kelime Optimizasyonu' },
+                                          { label: 'İçerik ve Yapı', key: 'İçerik ve Yapı' },
+                                          { label: 'Genel Kalite ve Profesyonellik', key: 'Genel Kalite ve Profesyonellik' },
+                                        ];
+                                        const items = fields.map((field, idx) => {
+                                          const line = details.find(l => l.includes(field.key));
+                                          let value = '';
+                                          if (line) {
+                                            const match = line.match(/([0-9]+\/[0-9]+)/);
+                                            if (match) value = match[1];
+                                          }
+                                          return (
+                                            <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                                              <FiberManualRecordIcon sx={{ fontSize: 12, color: '#6366f1', mr: 1 }} />
+                                              <Typography variant="body1" sx={{ fontWeight: 500, color: '#22223b' }}>
+                                                {field.label}: {value}
+                                              </Typography>
+                                            </Box>
+                                          );
+                                        });
+                                        return <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, width: '100%' }}>{items}</Box>;
+                                      })()}
+                                    </Box>
+                                  )}
                               </CardContent>
                             </Card>
                             {/* ATS Puanını Yükseltmek İçin Tavsiyeler */}
                             <Card elevation={0} sx={{ borderRadius: 4, boxShadow: 'none', background: 'rgba(255,255,255,0.85)', border: '1.5px solid #e0e7ff', p: 5, minHeight: 220, display: 'flex', flexDirection: 'column', justifyContent: 'center', backdropFilter: 'blur(2px)', transition: 'box-shadow 0.3s, transform 0.2s', '&:hover': { boxShadow: '0 2px 12px 0 rgba(99,102,241,0.10)', transform: 'scale(1.01)' } }}>
                               <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                                   <TrendingUpIcon sx={{ fontSize: 28, color: '#f59e42', mb: 1 }} />
-                                  <Typography variant="h6" gutterBottom>{t('ATS Puanını Yükseltmek İçin Tavsiyeler', 'Tips to Improve ATS Score')}</Typography>
+                                  <Typography variant="h6" gutterBottom>ATS Puanını Yükseltmek İçin Tavsiyeler</Typography>
                                   <ul style={{ marginTop: 8, marginBottom: 0, textAlign: 'left' }}>
-                                      {(analysisReport.atsImprovementTips && analysisReport.atsImprovementTips.length > 0)
-                                        ? analysisReport.atsImprovementTips.map((tip, i) => (
-                                            <li key={i} style={{ marginBottom: 6 }}>
-                                                <Typography variant="body2">{tip}</Typography>
-                                            </li>
-                                          ))
-                                        : [
-                                            'İş ilanındaki anahtar kelimeleri CV’nize ekleyin.',
-                                            'Sade ve düz bir format kullanın, tablo ve şekillerden kaçının.',
-                                            'Başlıkları standartlaştırın (Eğitim, Deneyim, Yetenekler vb.).',
-                                            'PDF veya DOCX formatında kaydedin.',
-                                            'Kısa ve öz yazın, gereksiz uzun cümlelerden kaçının.'
-                                          ].map((tip, i) => (
-                                            <li key={i} style={{ marginBottom: 6 }}>
-                                                <Typography variant="body2">{tip}</Typography>
-                                            </li>
-                                          ))
-                                      }
+                                    {(() => {
+                                      const tips = analysisReport.atsImprovementTips && analysisReport.atsImprovementTips.length > 0
+                                        ? analysisReport.atsImprovementTips.slice(0, 6)
+                                        : [];
+                                      const tipsToShow = tips.length < 6
+                                        ? [...tips, ...Array(6 - tips.length).fill('Daha fazla öneri üretilemedi.')]
+                                        : tips;
+                                      return tipsToShow.map((tip, i) => (
+                                        <li key={i} style={{ marginBottom: 6 }}>
+                                          <Typography variant="body2">{tip}</Typography>
+                                        </li>
+                                      ));
+                                    })()}
                                   </ul>
                               </CardContent>
                             </Card>
@@ -408,14 +456,14 @@ export const CvAnalyzerPage: React.FC = () => {
                             <Card elevation={0} sx={{ borderRadius: 4, boxShadow: 'none', background: 'rgba(255,255,255,0.85)', border: '1.5px solid #e0e7ff', p: 5, minHeight: 220, display: 'flex', flexDirection: 'column', justifyContent: 'center', backdropFilter: 'blur(2px)', transition: 'box-shadow 0.3s, transform 0.2s', '&:hover': { boxShadow: '0 2px 12px 0 rgba(99,102,241,0.10)', transform: 'scale(1.01)' } }}>
                               <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                                   <KeyIcon sx={{ fontSize: 28, color: '#6366f1', mb: 1 }} />
-                                  <Typography variant="h6">{t('Bulunan Anahtar Kelimeler', 'Found Keywords')}</Typography>
+                                  <Typography variant="h6">Bulunan Anahtar Kelimeler</Typography>
                                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2, justifyContent: 'center' }}>
                                       {analysisReport.foundKeywords.length > 0 ? 
                                           analysisReport.foundKeywords.map(keyword => (
                                               <Chip key={keyword} label={keyword} color="success" variant="filled" />
                                           )) : 
                                           <Typography variant="body2" color="text.secondary">
-                                              {t('CV’nizde iş ilanındaki anahtar kelimelerden hiçbiri bulunamadı. CV’nizi güncelleyebilirsiniz.', 'None of the targeted keywords from the job description were found in your CV. Consider updating your CV.')}
+                                              CV’nizde iş ilanındaki anahtar kelimelerden hiçbiri bulunamadı. CV’nizi güncelleyebilirsiniz.
                                           </Typography>
                                       }
                                   </Box>
@@ -425,14 +473,14 @@ export const CvAnalyzerPage: React.FC = () => {
                             <Card elevation={0} sx={{ borderRadius: 4, boxShadow: 'none', background: 'rgba(255,255,255,0.85)', border: '1.5px solid #e0e7ff', p: 5, minHeight: 220, display: 'flex', flexDirection: 'column', justifyContent: 'center', backdropFilter: 'blur(2px)', transition: 'box-shadow 0.3s, transform 0.2s', '&:hover': { boxShadow: '0 2px 12px 0 rgba(99,102,241,0.10)', transform: 'scale(1.01)' } }}>
                               <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                                   <WarningAmberIcon sx={{ fontSize: 28, color: '#f59e42', mb: 1 }} />
-                                  <Typography variant="h6">{t('Eksik Anahtar Kelimeler', 'Missing Keywords')}</Typography>
+                                  <Typography variant="h6">Eksik Anahtar Kelimeler</Typography>
                                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2, justifyContent: 'center' }}>
                                       {analysisReport.missingKeywords.length > 0 ? 
                                           analysisReport.missingKeywords.map(keyword => (
                                               <Chip key={keyword} label={keyword} color="warning" variant="outlined" />
                                           )) : 
                                           <Typography variant="body2" color="text.secondary">
-                                              {t('Tebrikler! Hedeflenen tüm anahtar kelimeler CV’nizde mevcut.', 'Congratulations! All targeted keywords are present in your CV.')}
+                                              Tebrikler! Hedeflenen tüm anahtar kelimeler CV’nizde mevcut.
                                           </Typography>
                                       }
                                   </Box>
@@ -453,7 +501,7 @@ export const CvAnalyzerPage: React.FC = () => {
                             <Card elevation={0} sx={{ maxWidth: 900, width: '100%', borderRadius: 4, boxShadow: 'none', background: 'rgba(255,255,255,0.95)', border: '1.5px solid #e0e7ff', p: 5, minHeight: 180, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mx: 'auto', backdropFilter: 'blur(2px)', transition: 'box-shadow 0.3s, transform 0.2s', '&:hover': { boxShadow: '0 2px 12px 0 rgba(99,102,241,0.10)', transform: 'scale(1.01)' } }}>
                               <CardContent sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                                 <LightbulbIcon sx={{ fontSize: 32, color: '#f59e42', mb: 1 }} />
-                                <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, color: '#f59e42', mb: 2 }}>{t('Ekstra Tavsiyeler', 'Extra Advice')}</Typography>
+                                <Typography variant="h6" gutterBottom sx={{ fontWeight: 700, color: '#f59e42', mb: 2 }}>Ekstra Tavsiyeler</Typography>
                                 <ul style={{ marginTop: 8, marginBottom: 0, textAlign: 'left', maxWidth: 700 }}>
                                   {analysisReport.extraAdvice.map((advice, i) => (
                                     <li key={i} style={{ marginBottom: 6 }}>
