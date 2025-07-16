@@ -1,3 +1,5 @@
+<img width="700" height="1000" alt="diyagram" src="https://github.com/user-attachments/assets/d3b6654d-5442-4a2a-a50c-cb3d23f24fe5" />
+
 # Yapay Zeka Destekli CV Analiz Motoru
 
 Bu proje, kullanıcıların CV'lerini ve iş ilanı metinlerini yükleyerek, Azure OpenAI ve Azure Form Recognizer servisleriyle analiz eden, modern ve kullanıcı dostu bir web uygulamasıdır. Amaç, CV'nin ATS (Aday Takip Sistemi) uyumluluğunu ve içerik kalitesini artırmaya yönelik kişiselleştirilmiş öneriler sunmaktır.
